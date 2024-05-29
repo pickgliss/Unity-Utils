@@ -5,7 +5,6 @@ namespace UnityUtils.EventSystem
 {
     public abstract class EventChannel<T> : ScriptableObject {
         readonly HashSet<EventListener<T>> _observers = new();
-        [ContextMenuItem("TestValue", "Test")]
         public T testValue;
         public void Test() => Invoke(testValue);
         

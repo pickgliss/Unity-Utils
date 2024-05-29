@@ -4,10 +4,10 @@ using UnityEngine.Events;
 namespace UnityUtils.EventSystem
 {
     public abstract class EventListener<T> : MonoBehaviour {
-        [SerializeField] EventChannel<T> eventChannel;
+        protected EventChannel<T> Channel;
         [SerializeField] UnityEvent<T> unityEvent;
-        protected void Awake() => eventChannel.Register(this);
-        protected void OnDestroy() => eventChannel.Deregister(this);
+        protected virtual void Awake() => Channel.Register(this);
+        protected void OnDestroy() => Channel.Deregister(this);
         public void Raise(T value) => unityEvent?.Invoke(value);
     }
     public class EventListener : EventListener<Empty> { }

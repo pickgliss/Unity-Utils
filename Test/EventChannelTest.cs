@@ -4,30 +4,9 @@ using UnityUtils.EventSystem;
 
 public class EventChannelTest : MonoBehaviour
 {
-    // [Header("Channels")]
-    // [SerializeField,HideLabel,InlineButton("TestEmptyChannel")] private EventChannel emptyChannel;
-    // [SerializeField,HideLabel,InlineButton("TestFloatChannel")] private FloatChannel floatChannel;
-    // [SerializeField,HideLabel,InlineButton("TestIntChannel")] private IntChannel intChannel;
-    //
-    
-    [Button]
-    public void TestEmptyChannel(EventChannel channel)
-    {
-        Debug.Log("Empty channel invoked");
-        channel.Invoke();
-    }
-    [Button]
-    public void TestFloatChannel(FloatChannel channel)
-    {
-        Debug.Log("Float channel invoked");
-        channel.Invoke(1.0f);
-    }
-    [Button]
-    public void TestIntChannel( IntChannel channel)
-    {
-        Debug.Log("Int channel invoked");
-        channel.Invoke(2);
-    }
+    public EventChannel eventChannel;
+    public FloatChannel floatChannel;
+    public IntChannel intChannel;
     
     public void ReceiveEmpty()
     {
