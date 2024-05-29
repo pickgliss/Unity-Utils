@@ -7,18 +7,17 @@ namespace Editor
     [CustomPropertyDrawer(typeof(EventChannel<>),true)]
     public class EventChannelDrawer : PropertyDrawer
     {
-        // public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        // {
-        //     EditorGUI.PropertyField(position,property,label);
-        // }
+        private readonly float _labelWidth = 80;
+        private readonly float _objectFieldWidth = 120;
+        private readonly float _buttonWidth = 60;
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
 
             // Calculate rects for UI elements
-            Rect labelRect = new Rect(position.x, position.y, 80, position.height);
-            Rect objectFieldRect = new Rect(position.x + 80, position.y, 120, position.height);
-            Rect buttonRect = new Rect(position.x + position.width - 60, position.y, 60, position.height);
+            var labelRect = new Rect(position.x, position.y, _labelWidth, position.height);
+            var objectFieldRect = new Rect(position.x + _labelWidth, position.y, _objectFieldWidth, position.height);
+            var buttonRect = new Rect(position.x + position.width - _buttonWidth, position.y, _buttonWidth, position.height);
 
             // Draw label
             EditorGUI.LabelField(labelRect, label);
@@ -30,6 +29,7 @@ namespace Editor
                 if (GUI.Button(buttonRect,"Create"))
                 {
                     var type = property.serializedObject.targetObject.GetType().GetField(property.propertyPath)?.FieldType;
+                    if(type == null) throw new System.Exception("Property Type not found");
                     // var type = fieldInfo.FieldType;
                     var channel = ScriptableObject.CreateInstance(type);
                     channel.name = type.Name;
