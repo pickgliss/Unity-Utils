@@ -5,13 +5,9 @@ namespace UnityUtils.EventSystem
 {
     public abstract class EventChannel<T> : ScriptableObject {
         readonly HashSet<EventListener<T>> _observers = new();
-        public T testValue;
-        public void Test() => Invoke(testValue);
-        
-        public void Invoke(T value) => _observers.ForEach(listener=>listener.Raise(value));
+        public void Invoke(T value) => _observers.ForEach(listener => listener.Raise(value));
         public void Register(EventListener<T> observer) => _observers.Add(observer);
         public void Deregister(EventListener<T> observer) => _observers.Remove(observer);
-        
     }
 
     public readonly struct Empty { }
