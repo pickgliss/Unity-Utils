@@ -7,17 +7,17 @@ namespace Editor
     [CustomPropertyDrawer(typeof(EventChannel<>),true)]
     public class EventChannelDrawer : PropertyDrawer
     {
-        private readonly float _labelWidth = 80;
-        private readonly float _objectFieldWidth = 120;
-        private readonly float _buttonWidth = 60;
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        private readonly float _buttonWidth = 50;
+        public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
+            EditorGUI.BeginProperty(rect, label, property);
+            var fieldWidth = rect.width - _buttonWidth;
+            var labelWidth = fieldWidth * 0.4f;
+            var objectFieldWidth = fieldWidth * 0.6f;
             // Calculate rects for UI elements
-            var labelRect = new Rect(position.x, position.y, _labelWidth, position.height);
-            var objectFieldRect = new Rect(position.x + _labelWidth, position.y, _objectFieldWidth, position.height);
-            var buttonRect = new Rect(position.x + position.width - _buttonWidth, position.y, _buttonWidth, position.height);
+            var labelRect = new Rect(rect.x, rect.y, labelWidth, rect.height);
+            var objectFieldRect = new Rect(rect.x + labelWidth, rect.y, objectFieldWidth, rect.height);
+            var buttonRect = new Rect(rect.x + rect.width - _buttonWidth, rect.y, _buttonWidth, rect.height);
 
             // Draw label
             EditorGUI.LabelField(labelRect, label);
