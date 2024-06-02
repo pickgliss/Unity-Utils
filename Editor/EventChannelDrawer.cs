@@ -8,6 +8,7 @@ namespace Editor
     public class EventChannelDrawer : PropertyDrawer
     {
         private readonly float _buttonWidth = 50;
+        private string _editingValue;
         public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(rect, label, property);
@@ -39,9 +40,15 @@ namespace Editor
                     AssetDatabase.Refresh();
                     property.serializedObject.ApplyModifiedProperties();
                 }
-            }else if (GUI.Button(buttonRect,"Test"))
+            }else
             {
-                property.objectReferenceValue.GetType().GetMethod("Test")?.Invoke(property.objectReferenceValue, null);
+                _editingValue = EditorGUI.TextField(buttonRect,_editingValue);
+                if(Event.current.isKey && Event.current.keyCode == KeyCode.Return)
+                {
+                    var method = property.objectReferenceValue.GetType().GetMethod("Test");
+                    if(method == null) throw new System.Exception("Method not found");
+                    method.Invoke(property.objectReferenceValue, new object[]{_editingValue});
+                }
             }
             EditorGUI.EndProperty();
         }
