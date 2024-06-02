@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UnityUtils.EventSystem
 {
     public abstract class EventChannel<T> : ScriptableObject{
-        readonly HashSet<EventListener<T>> _observers = new();
+        readonly HashSet<IEventListener<T>> _observers = new();
         public void Invoke(T value) => _observers.ForEach(listener => listener.Raise(value));
         public void Register(EventListener<T> observer) => _observers.Add(observer);
         public void Deregister(EventListener<T> observer) => _observers.Remove(observer);

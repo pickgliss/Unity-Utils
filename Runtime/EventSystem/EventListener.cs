@@ -3,7 +3,10 @@ using UnityEngine.Events;
 
 namespace UnityUtils.EventSystem
 {
-    public abstract class EventListener<T> : MonoBehaviour {
+    public interface IEventListener<in T> {
+        void Raise(T value);
+    }
+    public abstract class EventListener<T> : MonoBehaviour,IEventListener<T> {
         [SerializeField] protected EventChannel<T> channel;
         [SerializeField] UnityEvent<T> unityEvent;
         protected virtual void Awake() => channel.Register(this);
