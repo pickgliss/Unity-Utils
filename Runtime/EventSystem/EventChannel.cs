@@ -8,7 +8,8 @@ namespace UnityUtils.EventSystem
         public void Invoke(T value) => _observers.ForEach(listener => listener.Raise(value));
         public void Register(EventListener<T> observer) => _observers.Add(observer);
         public void Deregister(EventListener<T> observer) => _observers.Remove(observer);
-        public abstract void Test(string value);
+        public abstract T Cast(string value);
+        public void Invoke(string value) => Invoke(Cast(value));
     }
 
     public readonly struct Empty { }
@@ -16,7 +17,7 @@ namespace UnityUtils.EventSystem
     [CreateAssetMenu(menuName = "Events/EventChannel")]
     public class EventChannel : EventChannel<Empty>
     {
-        public void Invoke() => base.Invoke(default);
-        public override void Test(string value) => Invoke();
+        public void Invoke() => base.Invoke("");
+        public override Empty Cast(string value) => default;
     }
 }
