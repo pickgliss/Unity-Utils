@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Tracing;
 using UnityEngine;
+using UnityUtils.EventBus;
 
 namespace Test
 {
