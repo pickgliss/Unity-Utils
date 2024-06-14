@@ -6,7 +6,7 @@ using UnityUtils.EventChannel;
 
 public class ChannelTest : MonoBehaviour
 {
-    [FormerlySerializedAs("eventChannel")] public Channel channel;
+    [FormerlySerializedAs("eventChannel")] public EventChannel channel;
     public FloatChannel floatChannel;
     public IntChannel intChannel;
     

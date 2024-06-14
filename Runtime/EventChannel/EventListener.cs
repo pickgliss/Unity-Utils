@@ -13,5 +13,5 @@ namespace UnityUtils.EventChannel
         protected void OnDestroy() => channel.Deregister(this);
         public void Raise(T value) => unityEvent?.Invoke(value);
     }
-    public class Listener : Listener<Empty> { }
+    public class EventListener : Listener<Empty> { }
 }

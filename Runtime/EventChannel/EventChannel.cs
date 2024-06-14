@@ -15,7 +15,7 @@ namespace UnityUtils.EventChannel
     public readonly struct Empty { }
 
     [CreateAssetMenu(menuName = "Events/EventChannel")]
-    public class Channel : Channel<Empty>
+    public class EventChannel : Channel<Empty>
     {
         public void Invoke() => base.Invoke("");
         public override Empty Cast(string value) => default;
