@@ -1,10 +1,10 @@
 using UnityEditor;
 using UnityEngine;
-using UnityUtils.EventSystem;
+using UnityUtils.EventChannel;
 
 namespace Editor
 {
-    [CustomEditor(typeof(EventChannel<>),true)]
+    [CustomEditor(typeof(Channel<>),true)]
     public class EventChannelEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
@@ -12,7 +12,7 @@ namespace Editor
             OnInspectorGUI( (dynamic) target );
         }
         private string _testValue;
-        private void OnInspectorGUI<T>(EventChannel<T> typedTarget) {
+        private void OnInspectorGUI<T>(Channel<T> typedTarget) {
             EditorUtility.SetDirty(typedTarget);
             base.OnInspectorGUI();
             GUILayout.BeginHorizontal();

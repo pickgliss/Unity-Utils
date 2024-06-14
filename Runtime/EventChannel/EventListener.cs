@@ -1,17 +1,17 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace UnityUtils.EventSystem
+namespace UnityUtils.EventChannel
 {
-    public interface IEventListener<in T> {
+    public interface IListener<in T> {
         void Raise(T value);
     }
-    public abstract class EventListener<T> : MonoBehaviour,IEventListener<T> {
-        [SerializeField] protected EventChannel<T> channel;
+    public abstract class Listener<T> : MonoBehaviour,IListener<T> {
+        [SerializeField] protected Channel<T> channel;
         [SerializeField] UnityEvent<T> unityEvent;
         protected virtual void Awake() => channel.Register(this);
         protected void OnDestroy() => channel.Deregister(this);
         public void Raise(T value) => unityEvent?.Invoke(value);
     }
-    public class EventListener : EventListener<Empty> { }
+    public class Listener : Listener<Empty> { }
 }

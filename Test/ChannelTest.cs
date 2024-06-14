@@ -1,10 +1,12 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityUtils.EventSystem;
+using UnityEngine.Serialization;
+using UnityUtils.EventChannel;
 
-public class EventChannelTest : MonoBehaviour
+public class ChannelTest : MonoBehaviour
 {
-    public EventChannel eventChannel;
+    [FormerlySerializedAs("eventChannel")] public Channel channel;
     public FloatChannel floatChannel;
     public IntChannel intChannel;
     

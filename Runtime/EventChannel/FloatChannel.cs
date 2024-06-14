@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace UnityUtils.EventSystem
+namespace UnityUtils.EventChannel
 {
     [CreateAssetMenu(menuName = "Events/FloatChannel")]
-    public class FloatChannel : EventChannel<float>
+    public class FloatChannel : Channel<float>
     {
         public override float Cast(string value) => float.Parse(value);
     }

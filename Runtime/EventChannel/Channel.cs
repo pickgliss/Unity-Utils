@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityUtils.EventSystem
+namespace UnityUtils.EventChannel
 {
-    public abstract class EventChannel<T> : ScriptableObject{
-        readonly HashSet<IEventListener<T>> _observers = new();
+    public abstract class Channel<T> : ScriptableObject{
+        readonly HashSet<IListener<T>> _observers = new();
         public void Invoke(T value) => _observers.ForEach(listener => listener.Raise(value));
-        public void Register(EventListener<T> observer) => _observers.Add(observer);
-        public void Deregister(EventListener<T> observer) => _observers.Remove(observer);
+        public void Register(Listener<T> observer) => _observers.Add(observer);
+        public void Deregister(Listener<T> observer) => _observers.Remove(observer);
         public abstract T Cast(string value);
         public void Invoke(string value) => Invoke(Cast(value));
     }
@@ -15,7 +15,7 @@ namespace UnityUtils.EventSystem
     public readonly struct Empty { }
 
     [CreateAssetMenu(menuName = "Events/EventChannel")]
-    public class EventChannel : EventChannel<Empty>
+    public class Channel : Channel<Empty>
     {
         public void Invoke() => base.Invoke("");
         public override Empty Cast(string value) => default;
