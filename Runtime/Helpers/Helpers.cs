@@ -1,6 +1,10 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
+using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -28,10 +32,21 @@ namespace UnityUtils {
             public bool Equals(float x, float y) => Mathf.Abs(x - y) <= Mathf.Epsilon;
             public int GetHashCode(float obj) => obj.GetHashCode();
         }
+        
+        public static Guid CreateGuidFromString(string input) {
+            return new Guid(MD5.Create().ComputeHash(Encoding.Default.GetBytes(input)));
+        }
+    
+        public static Vector2 ClampToScreen(VisualElement element, Vector2 targetPosition) {
+            float x = Mathf.Clamp(targetPosition.x, 0, Screen.width - element.layout.width);
+            float y = Mathf.Clamp(targetPosition.y, 0, Screen.height - element.layout.height);
+
+            return new Vector2(x, y);
+        }
 
         /// <summary>
         /// Clears the console log in the Unity Editor.
-        /// </summary
+        /// </summary>
 #if UNITY_EDITOR        
         public static void ClearConsole() {
             var assembly = Assembly.GetAssembly(typeof(SceneView));
