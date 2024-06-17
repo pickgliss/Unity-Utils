@@ -1,4 +1,4 @@
-﻿namespace UnityUtils.EventBus
+﻿namespace EventBus
 {
     public interface IEvent { }
 }

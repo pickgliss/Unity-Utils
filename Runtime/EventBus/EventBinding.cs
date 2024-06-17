@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UnityUtils.EventBus
+namespace EventBus
 {
     public interface IEventBinding<T> {
         public Action<T> OnEvent { get; set; }

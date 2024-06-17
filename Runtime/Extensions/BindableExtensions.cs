@@ -1,8 +1,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Persistence;
 using UnityEngine;
+using Persistence;
 
 public static class BindableExtensions
 {
