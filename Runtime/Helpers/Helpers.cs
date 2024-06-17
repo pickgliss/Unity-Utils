@@ -43,6 +43,14 @@ namespace UnityUtils {
 
             return new Vector2(x, y);
         }
+        
+        public static void QuitGame() {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
 
         /// <summary>
         /// Clears the console log in the Unity Editor.
