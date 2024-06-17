@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace UnityUtils.EventChannel
+namespace EventChannel
 {
     public interface IListener<in T> {
         void Raise(T value);

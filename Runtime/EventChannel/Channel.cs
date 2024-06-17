@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityUtils.EventChannel
+namespace EventChannel
 {
     public abstract class Channel<T> : ScriptableObject{
         readonly HashSet<IListener<T>> _observers = new();
@@ -14,8 +14,8 @@ namespace UnityUtils.EventChannel
 
     public readonly struct Empty { }
 
-    [CreateAssetMenu(menuName = "Events/EventChannel")]
-    public class EventChannel : Channel<Empty>
+    [CreateAssetMenu(menuName = "Events/Channel")]
+    public class Channel : Channel<Empty>
     {
         public void Invoke() => base.Invoke("");
         public override Empty Cast(string value) => default;

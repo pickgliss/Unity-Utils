@@ -1,4 +1,4 @@
-namespace UnityUtils.EventChannel
+namespace EventChannel
 {
     public class FloatListener : Listener<float>
     {

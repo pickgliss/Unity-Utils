@@ -1,6 +1,6 @@
 using UnityEditor;
 using UnityEngine;
-using UnityUtils.EventChannel;
+using EventChannel;
 
 [CustomEditor(typeof(Channel<>),true)]
 public class EventChannelEditor : Editor
