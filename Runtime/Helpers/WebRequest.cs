@@ -15,7 +15,7 @@ namespace UnityUtils
             await request.SendWebRequest().AsTask();
             if (request.result == UnityWebRequest.Result.Success)
             {
-                OnComplete?.Invoke(request.downloadHandler.text);
+                HandleResponse(request.downloadHandler.text);
             }
             else
             {
@@ -31,7 +31,7 @@ namespace UnityUtils
             await request.SendWebRequest().AsTask();
             if (request.result == UnityWebRequest.Result.Success)
             {
-                OnComplete?.Invoke(request.downloadHandler.text);
+                HandleResponse(request.downloadHandler.text);
             }
             else
             {
@@ -40,7 +40,7 @@ namespace UnityUtils
         }
         protected virtual void HandleResponse(string response)
         {
-            Debug.Log(response);
+            OnComplete?.Invoke(response);
         }
     }
 }
