@@ -1,20 +1,42 @@
+using System;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace UnityUtils
 {
-    public static class WebRequest
+    [Serializable]
+    public class WebRequest
     {
-        public static UnityWebRequest Get(string url)
+        public string url;
+        
+        public async void Get(Action<string> callback)
         {
-            return UnityWebRequest.Get(url);
+            var request = UnityWebRequest.Get(url);
+            await request.SendWebRequest().AsTask();
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                callback?.Invoke(request.downloadHandler.text);
+            }
+            else
+            {
+                Debug.LogError($"Request failed with error: {request.error}");
+            }
         }
-        public static UnityWebRequest Post(string url, string body)
+        public async void Post(string body, Action<string> callback)
         {
             var request = new UnityWebRequest(url, "POST");
             request.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(body));
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
-            return request;
+            await request.SendWebRequest().AsTask();
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                callback?.Invoke(request.downloadHandler.text);
+            }
+            else
+            {
+                Debug.LogError($"Request failed with error: {request.error}");
+            }
         }
     }
 }
