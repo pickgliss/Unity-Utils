@@ -8,21 +8,21 @@ namespace UnityUtils
     public class WebRequest
     {
         public string url;
-        
-        public async void Get(Action<string> callback)
+        public event Action<string> OnComplete;
+        public async void Get()
         {
             var request = UnityWebRequest.Get(url);
             await request.SendWebRequest().AsTask();
             if (request.result == UnityWebRequest.Result.Success)
             {
-                callback?.Invoke(request.downloadHandler.text);
+                OnComplete?.Invoke(request.downloadHandler.text);
             }
             else
             {
                 Debug.LogError($"Request failed with error: {request.error}");
             }
         }
-        public async void Post(string body, Action<string> callback)
+        public async void Post(string body)
         {
             var request = new UnityWebRequest(url, "POST");
             request.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(body));
@@ -31,7 +31,7 @@ namespace UnityUtils
             await request.SendWebRequest().AsTask();
             if (request.result == UnityWebRequest.Result.Success)
             {
-                callback?.Invoke(request.downloadHandler.text);
+                OnComplete?.Invoke(request.downloadHandler.text);
             }
             else
             {
