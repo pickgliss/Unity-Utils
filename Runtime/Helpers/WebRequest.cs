@@ -38,5 +38,9 @@ namespace UnityUtils
                 Debug.LogError($"Request failed with error: {request.error}");
             }
         }
+        protected virtual void HandleResponse(string response)
+        {
+            Debug.Log(response);
+        }
     }
 }
