@@ -31,7 +31,8 @@ namespace UnityUtils
             }
             else
             {
-                Debug.LogError($"Request failed with error: {operation.webRequest.error}");
+                var url = operation.webRequest.url;
+                Debug.LogError($"{url}  error: {operation.webRequest.error}");
             }
         }
 
@@ -44,8 +45,8 @@ namespace UnityUtils
             {
                 return s.Deserialize<T>(operation.webRequest.downloadHandler.text);
             }
-
-            Debug.LogError($"Request failed with error: {operation.webRequest.error}");
+            var url = operation.webRequest.url;
+            Debug.LogError($"{url}  error: {operation.webRequest.error}");
             return default;
         }
     }
