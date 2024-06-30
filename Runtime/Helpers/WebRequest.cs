@@ -1,46 +1,52 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace UnityUtils
 {
-    [Serializable]
-    public class WebRequest
+    public static class WebRequest
     {
-        public string url;
-        public event Action<string> OnComplete;
-        public async void Get()
+        public static UnityWebRequestAsyncOperation Get(string url)
         {
             var request = UnityWebRequest.Get(url);
-            await request.SendWebRequest().AsTask();
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                HandleResponse(request.downloadHandler.text);
-            }
-            else
-            {
-                Debug.LogError($"Request failed with error: {request.error}");
-            }
+            return request.SendWebRequest();
         }
-        public async void Post(string body)
+
+        public static UnityWebRequestAsyncOperation Post(string url, string body)
         {
             var request = new UnityWebRequest(url, "POST");
             request.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(body));
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
-            await request.SendWebRequest().AsTask();
-            if (request.result == UnityWebRequest.Result.Success)
+            return request.SendWebRequest();
+        }
+
+        public static async void WithCallback(this UnityWebRequestAsyncOperation operation, Action<string> callback)
+        {
+            await operation.AsTask();
+            if (operation.webRequest.result == UnityWebRequest.Result.Success)
             {
-                HandleResponse(request.downloadHandler.text);
+                callback?.Invoke(operation.webRequest.downloadHandler.text);
             }
             else
             {
-                Debug.LogError($"Request failed with error: {request.error}");
+                Debug.LogError($"Request failed with error: {operation.webRequest.error}");
             }
         }
-        protected virtual void HandleResponse(string response)
+
+        public static async Task<T> WithSerializer<T>(this UnityWebRequestAsyncOperation operation,
+            ISerializer serializer = null)
         {
-            OnComplete?.Invoke(response);
+            var s = serializer ?? ISerializer.Json;
+            await operation.AsTask();
+            if (operation.webRequest.result == UnityWebRequest.Result.Success)
+            {
+                return s.Deserialize<T>(operation.webRequest.downloadHandler.text);
+            }
+
+            Debug.LogError($"Request failed with error: {operation.webRequest.error}");
+            return default;
         }
     }
 }
