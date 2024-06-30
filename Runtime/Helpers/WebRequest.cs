@@ -49,5 +49,18 @@ namespace UnityUtils
             Debug.LogError($"{url}  error: {operation.webRequest.error}");
             return default;
         }
+        public static async void WithOverwrite<T>(this UnityWebRequestAsyncOperation operation, T obj)
+        {
+            await operation.AsTask();
+            if (operation.webRequest.result == UnityWebRequest.Result.Success)
+            {
+                JsonUtility.FromJsonOverwrite(operation.webRequest.downloadHandler.text, obj);
+            }
+            else
+            {
+                var url = operation.webRequest.url;
+                Debug.LogError($"{url}  error: {operation.webRequest.error}");
+            }
+        }
     }
 }
