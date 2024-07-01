@@ -22,7 +22,7 @@ namespace UnityUtils
             return request;
         }
 
-        public static async Task<string> Send(this UnityWebRequest request)
+        public static async Task<string> Run(this UnityWebRequest request)
         {
             await request.SendWebRequest();
             if (request.result == UnityWebRequest.Result.Success)
@@ -33,7 +33,7 @@ namespace UnityUtils
             return null;
         }
 
-        public static async Task<T> Send<T>(this UnityWebRequest request,
+        public static async Task<T> Run<T>(this UnityWebRequest request,
             ISerializer serializer = null)
         {
             await request.SendWebRequest();
